@@ -345,13 +345,29 @@ LinkedList<T> LinkedList<T>::merge(const LinkedList<T>& other) const {
   // -----------------------------------------------------------
   using namespace std;
   int totalSize = left.size() + right.size();
+  cout << "Total Size: " << totalSize <<endl;
   int counter = 0;
   while (counter < totalSize)
   {
   if(merged.empty() == 1)
   {
+	cout << "Merged is empty" <<endl;
+	if(left.empty() == 1 && right.empty() == 0)
+	{
+	 cout << "Left is empty" <<endl;
+	 merged.pushBack(right.head_->data);
+	 right.popFront();	
+	 counter++;
+	}
+	else if(right.empty() == 1 && left.empty() == 0)
+	{
+	 cout << "Right is empty" <<endl;
+	 merged.pushBack(left.head_->data);
+	 left.popFront();	
+	 counter++;
+	}	
 	//check for smallest list initial value
-	if(left.head_->data < right.head_->data)
+	else if(left.head_->data < right.head_->data)
 	{
 	 merged.pushBack(left.head_->data);
 	 left.popFront();	
@@ -364,14 +380,16 @@ LinkedList<T> LinkedList<T>::merge(const LinkedList<T>& other) const {
 	 counter++;
 	}
   }
-  else if (left.empty() == 1)
+  else if (left.empty() == 1 && right.empty() == 0)
   {
+	 cout << "Left is empty" <<endl;
 	 merged.pushBack(right.head_->data);
 	 right.popFront();	
 	 counter++;
   }
-  else if (right.empty() == 1)
+  else if (right.empty() == 1 && left.empty() == 0)
   {
+	 cout << "Right is empty" <<endl;
 	 merged.pushBack(left.head_->data);
 	 left.popFront();	
 	 counter++;
