@@ -98,62 +98,78 @@ void LinkedList<T>::insertOrdered(const T& newData) {
 	Node* oldTail;
 	newNode->next = nullptr;
     newNode->prev = nullptr;
+	int flag = 0;
 	  if (!newData)
 	  {
 		  cout << "Nullptr" << endl;
 	  }
+	  cout << "newNode is: " << newNode->data << endl;
 	  
-	//if head is empty set as head.
-  if (head_ == NULL || tail_ == NULL) {
-	  size_++;
+	//if list is empty set newNode as head.
+  if (head_ == NULL && tail_ == NULL) {
+	size_++;
     head_ = newNode;
-	tail_ = nullptr;
-	cout << "Empty head set to newNode" << endl;
+	tail_ = newNode;
+	cout << "Empty list has head set to newNode" << endl;
+	cout << "head is: " << head_->data << endl;
   }
-  else {
-    oldHead = head_;
-	oldTail = tail_;
-  }
- 
- // If new data is smaller set as head.
- if(newNode->data < oldHead->data)
+  else 
   {
+    cout << "Else statement set tail and head" << endl;
+	oldHead = head_;
+	oldTail = tail_;
+	cout << "oldHead " << oldHead << endl;
+	cout << "head_ " << head_ << endl;
+	cout << "oldTail " << oldTail << endl;
+	cout << "tail_ " << tail_ << endl;
+	cout << "oldHead->next " << oldHead->next << endl;
+	
+	// If new data is smaller set as head.
+	if(newNode->data <= oldHead->data)
+	{
 	  size_++;
+	  cout << "Front of list: " << newNode->data << endl;
 	  oldHead->prev = newNode;
       newNode->next = oldHead;
       head_ = newNode;
-  }
-  else
-  {
-	  size_++;
-	  //If data is bigger set as tail.
-	  if(newNode->data > oldTail->data)
-	  {
+	}
+	//If new data is bigger set as tail.
+	else if(newNode->data > oldTail->data)
+	{
+		  size_++;
+		  cout << "Back of list: " << newNode->data << endl;		  
 		  oldTail->next = newNode;
 		  newNode->prev = oldTail;
 		  tail_ = newNode;
-		  newNode->next = nullptr; 
-	  }
+	}
+	// If new data is somewhere in between
+	// Add node before next node
+	else if (oldHead->next != NULL)
+	{
+	cout << "Enter while loop " << endl;	
+	while (oldHead->next != NULL)
+	{
+		if(newNode->data < oldHead->data && flag == 0)
+		{
+		flag++;
+		size_++;
+		cout << "Prev node data: " << oldHead->prev->data << endl;
+		cout << "newNode data: " << newNode->data << endl;
+		cout << "oldNode data: " << oldHead->data << endl;
+		newNode->next = oldHead;
+		oldHead->prev->next = newNode;
+		newNode->prev = oldHead->prev;
+		oldHead->prev = newNode;
+		}
+		cout << "current data: " << oldHead->data << endl;
+		oldHead = oldHead->next; //increment list index
+	}   
+	}
 	else
 	{
-	  int flag = 0;
-	  for (int i = 0; i<size_-1; i++)
-		{
-			if(newNode->data < oldHead->data && flag == 0)
-			{
-			flag++;
-			cout << "oldNode data: " << oldHead->prev->data << endl;
-			cout << "newNode data: " << newNode->data << endl;
-			cout << "oldNode data: " << oldHead->data << endl;
-			newNode->next = oldHead;
-			oldHead->prev->next = newNode;
-			newNode->prev = oldHead->prev;
-			oldHead->prev = newNode;
-			}
-			oldHead = oldHead->next; //increment list index
-		}
+	  cout << "Exit loop " << endl;
 	}
-  }
+  
   /*
   LinkedList<const Node*> forwardPtrList;
   LinkedList<const Node*> reversePtrList;
@@ -208,8 +224,9 @@ void LinkedList<T>::insertOrdered(const T& newData) {
   // they don't handle the null pointer at the tail properly. Be careful
   // to update all next, prev, head_, and tail_ pointers as needed on your
   // new node or on those existing nodes that are adjacent to the new node.
-
-}
+  
+  } // end of else statement
+}	//end of insertSort
 
 /********************************************************************
   Exercise 2: Linear-time Merge
