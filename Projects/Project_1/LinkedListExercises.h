@@ -94,24 +94,26 @@ void LinkedList<T>::insertOrdered(const T& newData) {
   // the earliest position where you should insert the new node.
   using namespace std;
   Node *newNode = new Node(newData);
-    Node* oldHead;
-	Node* oldTail;
-	newNode->next = nullptr;
-    newNode->prev = nullptr;
-	int flag = 0;
-	  if (!newData)
-	  {
-		  cout << "Nullptr" << endl;
-	  }
-//	  cout << "newNode is: " << newNode->data << endl;
+  Node* oldHead;
+  Node* oldTail;
+  newNode->next = nullptr;
+  newNode->prev = nullptr;
+  int flag = 0;
+  if (!newData)
+  {
+    cout << "Nullptr" << endl;
+  }
+//	cout << "newNode is: " << newNode->data << endl;
 	  
-	//if list is empty set newNode as head.
-  if (head_ == NULL && tail_ == NULL) {
+  //if list is empty set newNode as head.
+  if (head_ == NULL && tail_ == NULL) 
+  {
 	size_++;
     head_ = newNode;
 	tail_ = newNode;
 //	cout << "Empty list setting head to newNode" << endl;
   }
+  
   else 
   {
 	oldHead = head_;
@@ -160,26 +162,6 @@ void LinkedList<T>::insertOrdered(const T& newData) {
 	}   
 	}
   
-  /*
-  LinkedList<const Node*> forwardPtrList;
-  LinkedList<const Node*> reversePtrList;
-    const Node* cur = head_;
-    while (cur)
-	{
-      cout << "cur->data: " << cur->data <<endl;
-	  forwardPtrList.pushBack(cur);
-      cur = cur->next;
-	  
-    }
-
-    const Node* curT = tail_;
-    while (curT) 
-	{
-      cout << "curT->data: " << curT->data <<endl;
-	  reversePtrList.pushFront(curT);
-      curT = curT->prev;
-    }
-	*/
   // When you insert the node, make sure to update any and all pointers
   // between it and adjacent nodes accordingly (next and prev pointers).
   // You may also need to update the head_ and tail_ pointers in some
