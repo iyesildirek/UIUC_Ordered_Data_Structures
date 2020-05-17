@@ -103,32 +103,25 @@ void LinkedList<T>::insertOrdered(const T& newData) {
 	  {
 		  cout << "Nullptr" << endl;
 	  }
-	  cout << "newNode is: " << newNode->data << endl;
+//	  cout << "newNode is: " << newNode->data << endl;
 	  
 	//if list is empty set newNode as head.
   if (head_ == NULL && tail_ == NULL) {
 	size_++;
     head_ = newNode;
 	tail_ = newNode;
-	cout << "Empty list has head set to newNode" << endl;
-	cout << "head is: " << head_->data << endl;
+//	cout << "Empty list setting head to newNode" << endl;
   }
   else 
   {
-    cout << "Else statement set tail and head" << endl;
 	oldHead = head_;
 	oldTail = tail_;
-	cout << "oldHead " << oldHead << endl;
-	cout << "head_ " << head_ << endl;
-	cout << "oldTail " << oldTail << endl;
-	cout << "tail_ " << tail_ << endl;
-	cout << "oldHead->next " << oldHead->next << endl;
 	
 	// If new data is smaller set as head.
 	if(newNode->data <= oldHead->data)
 	{
 	  size_++;
-	  cout << "Front of list: " << newNode->data << endl;
+//	  cout << "Front of list: " << newNode->data << endl;
 	  oldHead->prev = newNode;
       newNode->next = oldHead;
       head_ = newNode;
@@ -137,7 +130,7 @@ void LinkedList<T>::insertOrdered(const T& newData) {
 	else if(newNode->data > oldTail->data)
 	{
 		  size_++;
-		  cout << "Back of list: " << newNode->data << endl;		  
+//		  cout << "Back of list: " << newNode->data << endl;		  
 		  oldTail->next = newNode;
 		  newNode->prev = oldTail;
 		  tail_ = newNode;
@@ -145,29 +138,26 @@ void LinkedList<T>::insertOrdered(const T& newData) {
 	// If new data is somewhere in between
 	// Add node before next node
 	else if (oldHead->next != NULL)
-	{
-	cout << "Enter while loop " << endl;	
+	{	
 	while (oldHead->next != NULL)
 	{
 		if(newNode->data < oldHead->data && flag == 0)
 		{
 		flag++;
 		size_++;
+/*		
 		cout << "Prev node data: " << oldHead->prev->data << endl;
 		cout << "newNode data: " << newNode->data << endl;
 		cout << "oldNode data: " << oldHead->data << endl;
+*/		
 		newNode->next = oldHead;
 		oldHead->prev->next = newNode;
 		newNode->prev = oldHead->prev;
 		oldHead->prev = newNode;
 		}
-		cout << "current data: " << oldHead->data << endl;
+		//cout << "current data: " << oldHead->data << endl;
 		oldHead = oldHead->next; //increment list index
 	}   
-	}
-	else
-	{
-	  cout << "Exit loop " << endl;
 	}
   
   /*
@@ -345,70 +335,38 @@ LinkedList<T> LinkedList<T>::merge(const LinkedList<T>& other) const {
   // -----------------------------------------------------------
   using namespace std;
   int totalSize = left.size() + right.size();
-  cout << "Total Size: " << totalSize <<endl;
+//  cout << "Total Size: " << totalSize <<endl;
   int counter = 0;
   while (counter < totalSize)
   {
-  if(merged.empty() == 1)
-  {
-	cout << "Merged is empty" <<endl;
+	// Use right side data only
 	if(left.empty() == 1 && right.empty() == 0)
 	{
-	 cout << "Left is empty" <<endl;
 	 merged.pushBack(right.head_->data);
 	 right.popFront();	
 	 counter++;
 	}
+	// Use left side data only
 	else if(right.empty() == 1 && left.empty() == 0)
 	{
-	 cout << "Right is empty" <<endl;
 	 merged.pushBack(left.head_->data);
 	 left.popFront();	
 	 counter++;
 	}	
-	//check for smallest list initial value
+	// Use left side if it is smaller than right
 	else if(left.head_->data < right.head_->data)
 	{
 	 merged.pushBack(left.head_->data);
 	 left.popFront();	
 	 counter++;
 	}
+	// Use right side if it is smaller than left
 	else if(right.head_->data < left.head_->data)
 	{
 	 merged.pushBack(right.head_->data); 
 	 right.popFront();
 	 counter++;
 	}
-  }
-  else if (left.empty() == 1 && right.empty() == 0)
-  {
-	 cout << "Left is empty" <<endl;
-	 merged.pushBack(right.head_->data);
-	 right.popFront();	
-	 counter++;
-  }
-  else if (right.empty() == 1 && left.empty() == 0)
-  {
-	 cout << "Right is empty" <<endl;
-	 merged.pushBack(left.head_->data);
-	 left.popFront();	
-	 counter++;
-  }  
-  else if(left.empty() == 0 || right.empty() == 0) 
-  {  
-	if(left.head_->data < right.head_->data)
-	{
-	 merged.pushBack(left.head_->data);
-	 left.popFront();	
-	 counter++;
-	}
-	else if(right.head_->data < left.head_->data)
-	{
-	 merged.pushBack(right.head_->data); 
-	 right.popFront();
-	 counter++;
-	}
-  }
   }
   // We return the merged list by value here. It may be copied out of the
   // function, but usually the compiler will optimize this to automatically
