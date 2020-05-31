@@ -1,0 +1,129 @@
+
+------------------------------
+EXAMPLE TREE 1
+
+Here's a small example tree. (The leftmost branches are displayed
+ highest in the vertical display format for the terminal.)
+A
+|
+|_ B
+|  |
+|  |_ C
+|  |
+|  |_ D
+|
+|_ E
+   |
+   |_ F
+   |
+   |_ G
+
+Debug display of the depth information per node:
+Depth: 0Depth: 1Depth: 2Depth: 2Depth: 1Depth: 2Depth: 2
+Now, when the tree goes out of scope and is destroyed, you can see the order
+ in which the nodes are explored and destroyed for cleanup:
+
+------------------------------
+EXAMPLE TREE 2
+
+Here's a larger tree:
+
+A
+|
+|_ B
+|  |
+|  |_ C
+|
+|_ D
+|  |
+|  |_ E
+|  |  |
+|  |  |_ F
+|  |  |
+|  |  |_ G
+|  |     |
+|  |     |_ H
+|  |
+|  |_ I
+|
+|_ J
+|
+|_ K
+   |
+   |_ L
+      |
+      |_ M
+
+Let's delete the subtrees rooted at D and at L:
+
+A
+|
+|_ B
+|  |
+|  |_ C
+|
+|_ [null]
+|
+|_ J
+|
+|_ K
+   |
+   |_ [null]
+
+Let's try some helper functions to count how many null children are left
+ over in the tree:
+
+Null children counted recursively: 2
+Null children counted iteratively: 2
+
+Now let's compress the tree to remove the null children pointers:
+
+After compressing:
+A
+|
+|_ B
+|  |
+|  |_ C
+|
+|_ J
+|
+|_ K
+
+Null children remaining: 0
+
+------------------------------
+EXERCISE 1: treeFactoryTest
+The output should match what you see in the code comments
+
+4
+|
+|_ 8
+|  |
+|  |_ 16
+|  |  |
+|  |  |_ 42
+|  |
+|  |_ 23
+|
+|_ 15
+
+
+------------------------------
+EXERCISE 2: traversalTest
+Testing your traverseLevels function
+
+[Test 1] Expected output:
+A B E C D F G
+Your traverseLevels output:
+A B E C D F G 
+
+[Test 2] Expected output:
+A B D J K C E I L F G M H
+Your traverseLevels output:
+A B D J K C E I L F G M H 
+
+[Test 3] Expected output:
+4 8 15 16 23 42
+Your traverseLevels output:
+4 8 15 16 23 42 
+

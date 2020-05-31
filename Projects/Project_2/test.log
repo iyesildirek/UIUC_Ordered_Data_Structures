@@ -1,0 +1,40 @@
+
+------------------------------
+EXERCISE 1: treeFactoryTest
+The output should match what you see in the code comments
+
+4
+|
+|_ 8
+|  |
+|  |_ 16
+|  |  |
+|  |  |_ 42
+|  |
+|  |_ 23
+|
+|_ 15
+
+
+------------------------------
+EXERCISE 2: traversalTest
+Testing your traverseLevels function
+
+[Test 1] Expected output:
+A B E C D F G
+Your traverseLevels output:
+A B E C D F G 
+
+[Test 2] Expected output:
+A B D J K C E I L F G M H
+Your traverseLevels output:
+A B D J K C E I L F G M H 
+
+[Test 3] Expected output:
+4 8 15 16 23 42
+Your traverseLevels output:
+4 8 15 16 23 42 
+
+===============================================================================
+All tests passed (12 assertions in 4 test cases)
+
