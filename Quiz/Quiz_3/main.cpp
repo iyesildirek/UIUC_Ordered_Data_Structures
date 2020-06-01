@@ -1,32 +1,52 @@
-/********************************************************
-You may assume that the following Node class has already
-been defined for you previously:
+/*
+The height of a node is the number of edges in
+its longest chain of descendants.
 
-class Node {
-public:
-  Node *left, *right;
-  Node() { left = right = nullptr; }
-  ~Node() {
-    delete left;
-    left = nullptr;
-    delete right;
-    right = nullptr;
-  }
-};
+Implement computeHeight to compute the height
+of the subtree rooted at the node n. Note that
+this function does not return a value. You should
+store the calculated height in that node's own
+height member variable. Your function should also
+do the same for EVERY node in the subtree rooted
+at the current node. (This naturally lends itself
+to a recursive solution!)
 
-You may also assume that iostream has already been included.
+Assume that the following includes have already been
+provided. You should not need any other includes
+than these.
 
-Implement the function "int count(Node *n)" below to return
-an integer representing the number of nodes in the subtree
-of Node n (including Node n itself).
-
-*********************************************************/
+#include <cstdio>
+#include <cstdlib>
 #include <iostream>
+#include <string>
+
+You have also the following class Node already defined.
+You cannot change this class definition, so it is
+shown here in a comment for your reference only:
 
 class Node {
 public:
+  int height; // to be set by computeHeight()
   Node *left, *right;
-  Node() { left = right = nullptr; }
+  Node() { height = -1; left = right = nullptr; }
+  ~Node() {
+    delete left;
+    left = nullptr;
+    delete right;
+    right = nullptr;
+  }
+};
+*/
+#include <cstdio>
+#include <cstdlib>
+#include <iostream>
+#include <string>
+
+class Node {
+public:
+  int height; // to be set by computeHeight()
+  Node *left, *right;
+  Node() { height = -1; left = right = nullptr; }
   ~Node() {
     delete left;
     left = nullptr;
@@ -35,48 +55,90 @@ public:
   }
 };
 
-int count(Node *n) {
+void computeHeight(Node *n) {
 
-  // Implement count() here.
-  int nodeNum = 0;
-
-  //check if ptr is valid
-  if (n == nullptr) 
+  // Implement computeHeight() here.
+  if(n == nullptr)
   {
-    //std::cout << "Null Node" << std::endl;
-	return nodeNum;
+	return;
+  }	
+   
+  int leftHeight = -1; 
+  int rightHeight = -1; 
+  int maxHeight = 0;
+
+  //Recursive call to check sides
+  computeHeight(n->left);
+  computeHeight(n->right);
+
+  // Check left side of BST
+  if (n->left != nullptr) 
+  {
+	leftHeight = n->left->height;
   }
   
-  //increase count
+  // Check right side of BST
+  if (n->right != nullptr) 
+  {
+	rightHeight = n->right->height;
+  }
+	
+  // Assign max height of branch
+  // from top to bottom
+  if(leftHeight > rightHeight)
+  {
+  	maxHeight = leftHeight;
+  }	
   else
   {
-	  std::cout << "Increase node count +1" << std::endl;
-	  nodeNum++;
-  }	  
-  
-  //Recursive count of left and right nodes
-  nodeNum += count(n->left);
-  nodeNum += count(n->right);
-  return nodeNum;
+	maxHeight = rightHeight;	
+  }
+  n->height = maxHeight + 1;
+
 }
 
+// This function prints the tree in a nested linear format.
+void printTree(const Node *n) {
+  if (!n) return;
+  std::cout << n->height << "(";
+  printTree(n->left);
+  std::cout << ")(";
+  printTree(n->right);
+  std::cout << ")";
+}
+
+// The printTreeVertical function gives you a verbose,
+// vertical printout of the tree, where the leftmost nodes
+// are displayed highest. This function has already been
+// defined in some hidden code.
+// It has this function prototype: void printTreeVertical(const Node* n);
+
+// This main() function is for your personal testing with
+// the Run button. When you're ready, click Submit to have
+// your work tested and graded.
 int main() {
   Node *n = new Node();
   n->left = new Node();
   n->right = new Node();
   n->right->left = new Node();
   n->right->right = new Node();
-  n->right->right->right = new Node();
   n->right->right->left = new Node();
-  n->right->left->left = new Node();
-  n->right->left->right = new Node();
-  
-  int result = count (n);
-  std::cout << "Total number of nodes: " << result << std::endl;
+  n->right->right->right = new Node();
+/*
+  n->right->right = new Node();
+  n->right->right->right = new Node();
+  n->right->right->right->right = new Node();
+  n->right->right->right->left = new Node();
+*/  
 
-  // Deleting n is sufficient to delete the entire tree
-  // because this will trigger the recursively-defined
-  // destructor of the Node class.
+  computeHeight(n);
+
+  printTree(n);
+  std::cout << std::endl << std::endl;
+  //printTreeVertical(n);
+  
+  // The Node destructor will recursively
+  // delete its children nodes.
   delete n;
   n = nullptr;
 
