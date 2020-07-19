@@ -1,0 +1,4 @@
+stack s: 5 4 3 2 1 
+stack reversed s: 1 2 3 4 5 
+queue q: 1 2 3 4 5 
+queue reversed q: 5 4 3 2 1 
